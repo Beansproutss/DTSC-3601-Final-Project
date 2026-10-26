@@ -133,7 +133,7 @@ def preprocess_train_data(combined_df):
 
     final_df["is_holiday"] = (final_df["holiday"] != "Not a federal holiday").astype(int)
 
-    feature_cols = ["location_id", "timestamp", "school_holiday", "free_flow_speed", "is_holiday", "AADT_2022"]
+    feature_cols = ["location_id", "day_of_week", "hour", "month", "school_holiday", "free_flow_speed", "is_holiday", "AADT_2022"]
     target_col = "current_speed"
 
     valid_rows = final_df[feature_cols].notna().all(axis=1) & final_df[target_col].notna()
@@ -240,7 +240,7 @@ def predict_custom_traffic(model, location_id, timestamp_str):
     df["is_holiday"] = df["school_holiday"] # Map to model's expected column
     
     # 5. Define features and predict
-    feature_cols = ["location_id", "day_of_week", "hour", "month", "free_flow_speed", "is_holiday", "AADT_2022"]
+    feature_cols = ["location_id", "day_of_week", "hour", "month", "school_holiday", "free_flow_speed", "is_holiday", "AADT_2022"]
     X_inference = df[feature_cols]
     
     predicted_speed = model.predict(X_inference)[0]
