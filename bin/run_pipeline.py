@@ -50,7 +50,7 @@ def main():
         return
     
     # Confirmation of the file loading into a dataframe    
-    print(f"Loading sample dataset from {data_path}...")
+    print(f"Loading sample dataset from {data_path2}...")
     ncdot_df = pd.read_csv(data_path2)
 
     # Calls the function to clean the NCDOT dataframe
