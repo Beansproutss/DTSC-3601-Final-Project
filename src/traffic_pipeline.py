@@ -35,6 +35,44 @@ def school_holiday_check(traffic_df):
                     )))
     return traffic_df
 
+def extract_ncdot_traffic_data(ncdot_df):
+    # Rebuilt to match indices 0 through 10 of ncdot_df perfectly
+    matched_latitudes = [
+        35.287972,  # Row 0: EAST OF STETSON DR
+        35.311361,  # Row 1: WEST OF I-485
+        35.293111,  # Row 2: SOUTH OF UNIVERSITY POINTE BLVD
+        35.309306,  # Row 3: EAST OF SUTHER RD
+        35.306917,  # Row 4: WEST OF SUTHER RD
+        35.313611,  # Row 5: EAST OF SR 5394 MALLARD CK
+        35.311861,  # Row 6: WEST OF W 7TH ST 
+        35.301861,  # Row 7: SOUTH OF US 29
+        35.294889,  # Row 8: EAST OF SR 5316
+        35.299639,  # Row 9: EAST OF SR 2939
+        35.307778   # Row 10: NORTH OF NC 49
+    ]
+
+    matched_longitudes = [
+        -80.759472, # Row 0
+        -80.711222, # Row 1
+        -80.749361, # Row 2
+        -80.718056, # Row 3
+        -80.722639, # Row 4
+        -80.701944, # Row 5
+        -80.744000, # Row 6 
+        -80.752333, # Row 7
+        -80.742111, # Row 8
+        -80.745750, # Row 9
+        -80.724583  # Row 10
+    ]
+
+    #loop through the matched coordinates to update df2_final
+    for i in range(len(matched_latitudes)):
+        ncdot_df.at[i, "matched_latitude"] = matched_latitudes[i]
+        ncdot_df.at[i, "matched_longitude"] = matched_longitudes[i]
+
+    return ncdot_df
+    
+
 def combine_dataframes(tomtom_df, ncdot_df):
     """
     Combines two DataFrames (tomtom_df and ncdot_df) by matching latitude and longitude values, and adds the AADT_2022 column from ncdot_df to tomtom_df.
