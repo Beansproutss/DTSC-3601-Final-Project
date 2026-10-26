@@ -15,6 +15,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.traffic_pipeline import (
     school_holiday_check,
     combine_dataframes,
+    extract_ncdot_traffic_data,
     preprocess_train_data,
     evaluate_model
 )
