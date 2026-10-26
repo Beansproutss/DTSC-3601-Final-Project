@@ -37,6 +37,7 @@ def school_holiday_check(traffic_df):
 
 def extract_ncdot_traffic_data(ncdot_df):
     # Rebuilt to match indices 0 through 10 of ncdot_df perfectly
+    ncdot_df = ncdot_df.copy()
     matched_latitudes = [
         35.287972,  # Row 0: EAST OF STETSON DR
         35.311361,  # Row 1: WEST OF I-485
