@@ -42,6 +42,8 @@ def main():
         return
     
     ncdot_df = pd.read_csv(data_path2)
+
+    ncdot_df = extract_ncdot_traffic_data(ncdot_df)
     
     # 3. Step: School Holiday Check
     print("Running school holiday feature engineering...")
