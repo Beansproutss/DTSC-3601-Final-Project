@@ -6,22 +6,38 @@ Our project provides long term prediction of Charlotte traffic patterns surround
 ## Installation/Access
 We recommend the following libraries as they will be necessary to accurately predict traffic patterns at certain parts of the day. Python 3.10+ is required in order to run this code. The libraries and the versions used in this project are listed below. The other standard libaries do not have a recommended version as they are built into Python.
 
-## Required libraries that will later be downloaded
-# Python 3.10+
+# Required libraries that will later be downloaded
+
+Python 3.10+
+
 xgboost
+
 numpy
+
 -U scikit-learn
+
 requests #2.34.2
+
 pandas as pd # 2.3.3
+
 urllib3 # 2.8.0
+
 boto3 # 1.43.98
+
 io
+
 gzip
+
 logging
+
 json
+
 os
+
 datetime
+
 USFederalHolidayCalendar from pandas.tseries.holiday
+
 StringIO from io
 
 ## How to download the code
@@ -112,8 +128,7 @@ predicted_speed, traffic_condition = predict_custom_traffic(
 )
 
 ## Contributing
-Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
-
+Interested in contributing? Email one of the creators to get started!
 ## License
 ‘NoParking’ was created by Isabella Broughton, Caleb Brown, Nirali Patel, and Addy Tran. It is licensed under the terms of the Apache 2.0 license. To see what Apache 2.0 allows in detail go here: https://github.com/Beansproutss/DTSC-3601-Final-Project/blob/main/LICENSE
 
