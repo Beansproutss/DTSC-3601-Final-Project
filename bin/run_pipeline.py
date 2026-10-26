@@ -62,7 +62,7 @@ def main():
     model, X_test, y_test = preprocess_train_data(df_with_holidays)
     print("Model training complete!")
 
-    model, X_test, y_test = evaluate_model(model, X_test, y_test)
+    evaluate_model(model, X_test, y_test)
 
     predict_custom_traffic(model, 2, "2026-10-19 19:00:00")
     
