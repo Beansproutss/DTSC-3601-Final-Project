@@ -67,7 +67,7 @@ def main():
 
     # Calls the function to train the model
     print("Preprocessing data and training the XGBoost model...")
-    model, X_test, y_test = preprocess_train_data(df_with_holidays)
+    model, X_test, y_test = preprocess_train_data(combined_df)
     print("Model training complete!")
 
     # Calls the function to evalute the trained model
