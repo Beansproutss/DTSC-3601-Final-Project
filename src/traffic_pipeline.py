@@ -15,6 +15,8 @@ def school_holiday_check(traffic_df):
     """
     # For days of the week, Monday = 0, Sunday = 6 
     # 0 is not a holiday, 1 is a holiday
+    traffic_df["timestamp"] = pd.to_datetime(traffic_df["timestamp"])
+    
     school_holidays = [
         ("2026-10-12", "2026-10-13"), #Student recess
         ("2026-11-11", "2026-11-11"), #Veterans Day
