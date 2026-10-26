@@ -75,7 +75,7 @@ Timestamp should be in this datetime format (year-month-day) with 24 hour clock 
 Example: 2026-10-26 14:00:00
 
 ## Get Started Example
-## To access sample data go to folder labeled sample_data
+To access sample data go to folder labeled sample_data
 Please run and read all of the directions above before testing sample_data!!
 
 Open the repository folder in VS Code to create a new file, where you can run our example! (If you cannot find the folder, in your terminal, after using cd to our repo, run "code ." This should open VS Code to the folder!)
