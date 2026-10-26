@@ -3,11 +3,4 @@ numpy
 scikit-learn
 pandas
 boto3
-io
-gzip
-json
-requests
-urllib3
-logging
-os
-datetime
+
