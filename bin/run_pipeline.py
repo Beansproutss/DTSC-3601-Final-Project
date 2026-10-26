@@ -35,7 +35,7 @@ def main():
 
         
     script_dir2 = os.path.dirname(os.path.abspath(__file__))
-    data_path2 = os.path.join(script_dir, "sample_data.csv")
+    data_path2 = os.path.join(script_dir, "sample_ncdot_data.csv")
     
     if not os.path.exists(data_path2):
         print(f"[Error] Dataset not found at: {data_path2}")
