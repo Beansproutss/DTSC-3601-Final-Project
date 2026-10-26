@@ -8,6 +8,7 @@ model training, and evaluation using the provided sample dataset.
 import os
 import sys
 import pandas as pd
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -57,8 +58,10 @@ def main():
     # (Assuming your preprocess_train_data function splits and returns the trained model,
     # or you can adjust it to return X_test and y_test for evaluation).
     # Let's run the preprocessing & training:
-    model = preprocess_train_data(df_with_holidays)
+    model, X_test, y_test = preprocess_train_data(df_with_holidays)
     print("Model training complete!")
+
+    evaluate_model(model, X_test, y_test)
     
     print("Pipeline finished successfully!")
 
