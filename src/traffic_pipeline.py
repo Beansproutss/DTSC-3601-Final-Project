@@ -124,11 +124,9 @@ def preprocess_train_data(combined_df):
     Returns:
         model (xgb.XGBRegressor): The trained XGBoost regression model.
     """
-    final_df = final_df.copy()
+    final_df = combined_df.copy()
     # Assigning a unique location ID to each combination of latitude and longitude
     final_df["location_id"] = final_df.groupby(["latitude", "longitude"]).ngroup()
-    # Create a copy of the combined DataFrame to avoid modifying the original
-    final_df = combined_df.copy()
 
     # Sorting the final dataframe by timestamp and resetting the index
     final_df = final_df.sort_values("timestamp").reset_index(drop=True)
