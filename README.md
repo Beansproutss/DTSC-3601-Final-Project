@@ -1,5 +1,5 @@
 # DTSC-3601-Final-Project (NoParking)
-Final project repository for DTSC 3601 and 3602
+# Final project repository for DTSC 3601 and 3602
 
 Our project provides long term prediction of Charlotte traffic patterns surrounding the UNC Charlotte campus, based on historical data. It is primarily intended to benefit those who frequently drive to and from campus, but at different times (like students), so that they can plan their routes ahead of time.
 
@@ -27,11 +27,18 @@ StringIO from io
 ## How to download the code
 1) Clone the repository using this link: https://github.com/Beansproutss/DTSC-3601-Final-Project.git
 
+In Powershell run these commands to clone, install libraries, and run the pipeline:
+
 ```bash
 git clone https://github.com/Beansproutss/DTSC-3601-Final-Project.git
 cd DTSC-3601-Final-Project
 ```
 2) After cloning, run pip install -r requirements.txt from the NoParking directory. This will install the required libraries.
+```bash
+pip install -r requirements.txt 
+python bin/run_pipeline.py
+```
+As for the other files in the repository, code reviewers will not be able to run them as they do not have access to our API key, but it is there for them to review and is explained by comments and docstrings. If there is anything they think we should add, we can apply those changes later.
 
 ## Usage
 "NoParking" can be used for long-term prediction of traffic surrounding the UNC Charlotte campus for different days/times.
@@ -48,25 +55,46 @@ Continued list of included roads and their ID's:
 9: Johnson Alumni Way near Shane's Rib Shack
 10: North Tryon Street near Chipotle and Atrium Health Urgent Care
 
-Users will be able to input a Location ID, time/day, and our model will output whether a road is heavily trafficked, moderately trafficked, or little to no traffic. 
-Timestamp should be in this datetime format (year-month-day)
-Example: 2026-10-26
+Users will be able to input a Location ID, year, month, day, and our model will output whether a road is heavily congested, moderately congested, or low congestion. 
+Timestamp should be in this datetime format (year-month-day) with 24 hour clock time system. Formatted in a string.
+Example: 2026-10-26 14:00:00
 
 ## Get Started Example
+## To access sample data go to folder labeled sample_data
+Please run and read all of the directions above before testing sample_data!!
+
+Open the repository folder in VS Code to create a new file, where you can run our example! (If you cannot find the folder, in your terminal, after using cd to our repo, run "code ." This should open VS Code to the folder!)
+
+
 import pandas as pd
-from src.traffic_pipeline.py import school_holiday_check, preprocess_train_data
-# 1. Load the pre-extracted sample dataset included in the repo bin folder
-sample_df = pd.read_csv("sample_data.csv")
 
-sample_ncdot_df = pd.read_csv("sample_ncdot_data.csv")
+## 1. Import custom pipeline functions from src/
+from src.traffic_pipeline import (
+    school_holiday_check,
+    combine_dataframes,
+    extract_ncdot_traffic_data,
+    preprocess_train_data,
+    evaluate_model,
+    predict_custom_traffic
+)
 
-# 2. Run your functions directly on it
-df_with_holidays = school_holiday_check(df)
-model = preprocess_train_data(df_with_holidays)
+## 2. Load the datasets using your local file paths 
+df_tomtom = pd.read_csv(r"your_file_path_sample_data.csv")
+ncdot_df = pd.read_csv(r"your_file_path_sample_ncdot_df")
 
-print(evaluate_mode(model))
-print("Model sucessfully trained on sample data!)
+ncdot_df = extract_ncdot_traffic_data(ncdot_df)
+df_with_holidays = school_holiday_check(df_tomtom)
+combined_df = combine_dataframes(df_with_holidays, ncdot_df)
 
+## 3. to train and save the model once in the notebook:
+model, X_test, y_test = preprocess_train_data(combined_df)
+
+## 4. Test any location ID and timestamp
+predicted_speed, traffic_condition = predict_custom_traffic(
+    model, 
+    location_id=2, 
+    timestamp_str="2026-10-19 19:00:00"
+)
 
 ## Contributing
 Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
