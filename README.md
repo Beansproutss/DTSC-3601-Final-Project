@@ -49,6 +49,8 @@ Continued list of included roads and their ID's:
 10: North Tryon Street near Chipotle and Atrium Health Urgent Care
 
 Users will be able to input a Location ID, time/day, and our model will output whether a road is heavily trafficked, moderately trafficked, or little to no traffic. 
+Timestamp should be in this datetime format (year-month-day)
+Example: 2026-10-26
 
 ## Get Started Example
 import pandas as pd
