@@ -186,5 +186,5 @@ def evaluate_model(model, X_test, y_test):
     print(f"R² Score (Variance Explained): {r2:.4f}")
 
     # Displaying the predicted output speeds for each input in the test set
-    for i in range(len(4)):
+    for i in range(4):
         print(f"Input:\n{X_test.iloc[i]} \nOutput speed: {y_pred[i]} mph")
