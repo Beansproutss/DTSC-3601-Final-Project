@@ -28,8 +28,10 @@ StringIO from io
 1) Clone the repository using this link: https://github.com/Beansproutss/DTSC-3601-Final-Project.git
 
 In Powershell run these commands to clone, install libraries, and run the pipeline:
+Before cloning go to a file in your file system.
+Example: cd C:\Users\YourName\Downloads\DTSC
 
-```bash
+``` 
 git clone https://github.com/Beansproutss/DTSC-3601-Final-Project.git
 cd DTSC-3601-Final-Project
 ```
@@ -38,6 +40,9 @@ cd DTSC-3601-Final-Project
 pip install -r requirements.txt 
 python bin/run_pipeline.py
 ```
+This will output model evaluation and a sample prediction. If code reviewers want to test their own predictions for different locations/times/days they will have to open VS Code.
+Note: this data will only accurately predict congestion for the months of October as the sample data only contains rows from October.
+
 As for the other files in the repository, code reviewers will not be able to run them as they do not have access to our API key, but it is there for them to review and is explained by comments and docstrings. If there is anything they think we should add, we can apply those changes later.
 
 ## Usage
