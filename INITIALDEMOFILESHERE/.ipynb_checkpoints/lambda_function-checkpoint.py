@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 import boto3
@@ -9,18 +10,33 @@ s3 = boto3.client("s3")
 MODEL_BUCKET = os.environ["MODEL_BUCKET"]
 MODEL_KEY = os.environ["MODEL_KEY"]
 LOCAL_MODEL_PATH = "/tmp/model.json"
-_MODEL = None
+LOOKUP_KEY = "production/location_lookup.csv"
 
-def _get_model():
-    global _MODEL
-    if _MODEL is None:
-        if not os.path.exists(LOCAL_MODEL_PATH):
-            s3.download_file(MODEL_BUCKET, MODEL_KEY, LOCAL_MODEL_PATH)
+cached_model = None
+cached_lookup = {}
+last_modified = None
 
-        loaded = xgb.XGBRegressor()
-        loaded.load_model(LOCAL_MODEL_PATH)
-        _MODEL = loaded
-    return _MODEL
+def _get_latest_model():
+    global cached_model, cached_lookup, last_modified
+
+    meta = s3.head_object(Bucket=MODEL_BUCKET, Key=MODEL_KEY)
+    s3_timestamp = meta["LastModified"]
+
+    if cached_model is None or s3_timestamp != last_modified:
+        s3.download_file(MODEL_BUCKET, MODEL_KEY, "/tmp/xgboost-model.json")
+        s3.download_file(MODEL_BUCKET, LOOKUP_KEY, "/tmp/location_lookup.csv")
+
+        model = xgb.XGBRegressor()
+        model.load_model("/tmp/xgboost-model.json")
+
+        lookup = {}
+        with open("/tmp/location_lookup.csv", "r") as f:
+            for row in csv.DictReader(f):
+                lookup[(float(row["latitude"]), float(row["longitude"]))] =int(row["location_id"])
+        cached_model = model
+        cached_lookup = lookup
+        last_modified = s3_timestamp
+    return cached_model, cached_lookup
 
 def lambda_handler(event, context):
     raw_body = event.get("body")
@@ -50,7 +66,9 @@ def lambda_handler(event, context):
             "body": json.dumps({"error": "'location_id' must be an integer."}),
         }
 
-    predicted_speed, traffic_level = predict_custom_traffic(_get_model(), location_id, dt_input)
+    model, cached_lookup = _get_latest_model()
+
+    predicted_speed, traffic_level = predict_custom_traffic(model, location_id, dt_input)
 
     return {
         "statusCode": 200,
