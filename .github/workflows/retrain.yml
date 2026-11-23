@@ -1,0 +1,29 @@
+name: Retrain Traffic Model
+
+on:
+  schedule:
+    - cron: '0 5 */2 * *'
+  workflow_dispatch: 
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas numpy xgboost boto3
+
+      - name: Run retraining
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+          SNS_TOPIC_ARN: ${{ secrets.SNS_TOPIC_ARN }}
+        run: python retrain.py
