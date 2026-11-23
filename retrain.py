@@ -11,7 +11,8 @@ sns = boto3.client("sns")
 
 BUCKET = "s3-3601-final-project"
 DATA_PREFIX = "tomtom/traffic/"
-SNS_TOPIC_ARN = os.environ["arn:aws:sns:us-east-1:946033678820:ModelAccuracyAlert"]
+SNS_TOPIC_ARN = os.environ["SNS_TOPIC_ARN"]
+
 
 
 def extract_clean_tomtom_traffic_data():
